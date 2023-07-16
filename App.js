@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, Text, Button, Alert} from 'react-native';
+import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableOpacity} from 'react-native';
 import { useState } from 'react';
 
 
@@ -18,10 +18,12 @@ const App = () => {
        placeholder='Type Something Here'
      />
     <Text style={styles.textDisplay}>you wrote: {text}</Text>
-    <Button onPress={() => {
+    <TouchableOpacity style={styles.button} onPress={() => {
         alertMyText();
         }}
-        title='press me' />
+        >
+          <Text>press here</Text>
+    </TouchableOpacity>
     </View>
   );
 }
@@ -41,6 +43,12 @@ const styles = StyleSheet.create({
   textDisplay: {
     height: 50,
     lineHeight: 50
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#dd8d12',
+    paddingHorizontal: 20,
+    paddingBottom: 10,
   }
 });
 
