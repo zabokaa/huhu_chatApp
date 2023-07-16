@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Screen1 from './components/Screen1';
-import Screen2 from './components/Screen2';
+import Start from './components/Start';
+import Chat from './components/Chat';
 
 // Creating navigator before App func
 const Stack = createNativeStackNavigator();
@@ -16,12 +16,12 @@ const App = () => {
         initialRouteName="Screen1"
       >
         <Stack.Screen
-          name="Screen1"
-          component={Screen1}
+          name="Home"
+          component={Start}
         />
         <Stack.Screen
-          name="Screen2"
-          component={Screen2}
+          name="Chat"
+          component={Chat}
         />
       </Stack.Navigator>
     </NavigationContainer>
