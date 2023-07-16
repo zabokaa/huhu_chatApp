@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableOpacity, ScrollView} from 'react-native';
 import { useState } from 'react';
 
 
@@ -24,6 +24,9 @@ const App = () => {
         >
           <Text>press here</Text>
     </TouchableOpacity>
+    <ScrollView>
+      <Text style={{fontSize:80, color:'blue'}}>too big to see at once ! scroll scroll !! </Text>
+    </ScrollView>
     </View>
   );
 }
