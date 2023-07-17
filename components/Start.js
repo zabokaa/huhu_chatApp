@@ -25,6 +25,24 @@ const Start = ({ navigation }) => {
                 <Text style={styles.chooseCol}>
                     Choose Background Color:
                 </Text>
+                <View style={styles.colButtonContainer}>
+                    <TouchableOpacity
+                        style={[styles.changeColButton, { backgroundColor: '#090C08' }]}
+                        onPress={() => handleColorChange('#090C08')}
+                    />
+                    <TouchableOpacity
+                        style={[styles.changeColButton, { backgroundColor: '#474056' }]}
+                        onPress={() => handleColorChange('#474056')}
+                    />
+                    <TouchableOpacity
+                        style={[styles.changeColButton, { backgroundColor: '#8A95A5' }]}
+                        onPress={() => handleColorChange('#8A95A5')}
+                    />
+                    <TouchableOpacity
+                        style={[styles.changeColButton, { backgroundColor: '#B9C6AE' }]}
+                        onPress={() => handleColorChange('#B9C6AE')}
+                    />
+                </View>
                 <TouchableOpacity 
                     style={styles.chatButton} 
                     onPress={() => navigation.navigate('Chat', {name: name})}
@@ -42,7 +60,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexDirection: 'column',        //is default, just for structure
     },
     backgroundImage: {
         flex: 1,
@@ -85,6 +104,17 @@ const styles = StyleSheet.create({
         opacity: 100,
         marginTop: 15,
         marginBottom: 15,
+    },
+    colButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '88%',
+      },
+    changeColButton: {
+        backgroundColor: '#090C08', 
+       width: 30,
+       height: 30,
+       borderRadius: 15, 
     },
     chatButton: {
         width: '88%',
