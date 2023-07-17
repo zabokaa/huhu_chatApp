@@ -23,8 +23,8 @@ and location data
 
 ## user stories 
 - As a new user, I want to be able to easily enter a chat room so I can quickly start talking to my
-friends and family.
-- As a user, I want to be able to send messages to my friends and family members to exchange
+friends.
+- As a user, I want to be able to send messages to my friends to exchange
 the latest news.
 - As a user, I want to send images to my friends to show them what I’m currently doing.
 - As a user, I want to share my location with my friends to show them where I am.
