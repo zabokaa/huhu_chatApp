@@ -119,7 +119,7 @@ const styles = StyleSheet.create({   //OBJECT WITH PROPERTIES, THAT ARE OBJECTS 
         marginTop: 15,
         marginBottom: 15,
         fontSize: 16,
-        color: '#FFFFFF',
+        color: 'black',
         opacity: 50,
     },
     chooseCol:{
