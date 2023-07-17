@@ -16,11 +16,11 @@ const Start = ({ navigation }) => {
 
   return (
     <View style={[styles.container, {backgroundColor}]}>
-        {/* <ImageBackground
-            source={require('../assets/Background Image.png')}
+        <ImageBackground
+            source={require('../assets/BackgroundIMG.png')}
             resizeMode='cover'
             style={styles.backgroundImage}
-        > */}
+        >
             <View style={styles.titleBox}>
                 <Text style={styles.title}>HUHU</Text>
             </View>
@@ -77,7 +77,7 @@ const Start = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
            
-        {/* </ImageBackground>    */}
+        </ImageBackground>   
     </View>
   );
 }
