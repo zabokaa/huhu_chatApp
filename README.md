@@ -10,9 +10,8 @@
 * [acknowledgements](#acknowledgements)
 
 ## objective
-- to build a chat app for mobile devices using React Native
+- to build a chat app for mobile devices using React Native, Expo, and Google Firestore Database
 - app will provide users with a chat interface and options to share images and their location
-- use of React Native, Expo, and Google Firestore Database
   
 ## key features
 - one page where users can enter their name and choose a background color for the chat screen
