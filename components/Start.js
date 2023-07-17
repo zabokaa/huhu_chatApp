@@ -45,13 +45,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 16,
     color: '#FFFFFF',
-    // opacity: '50%'
+    opacity: 50,
   },
   chooseCol:{
     width: '88%',
     fontSize: 16,
     fontWeight: 300,
     color: '#757083',
+    opacity: 100,
     marginTop: 15,
     marginBottom: 15,
   },
