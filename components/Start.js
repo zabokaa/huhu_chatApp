@@ -7,7 +7,6 @@ const Start = ({ navigation }) => {
     const [backgroundColor, setBackgroundColor] = useState('');
     // create circle around selected color button:
     const [selectedCol, setSelectedCol] = useState('');
-
     const handleColorChange = (color) => {
         setBackgroundColor(color);
         setSelectedCol(color);
@@ -21,6 +20,7 @@ const Start = ({ navigation }) => {
             resizeMode='cover'
             style={styles.backgroundImage}
         >
+
             <View style={styles.titleBox}>
                 <Text style={styles.title}>HUHU</Text>
             </View>
@@ -76,23 +76,23 @@ const Start = ({ navigation }) => {
                     <Text style={styles.btnText}>Start Chatting</Text>
                 </TouchableOpacity>
             </View>
-           
         </ImageBackground>   
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({   //OBJECT WITH PROPERTIES, THAT ARE OBJECTS ITSELVES and its validating the properties
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
         flexDirection: 'column',        //is default, just for structure
     },
     backgroundImage: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: 15,          //added margins, so user can see the col change for chat view
+        marginRight: 15
     },
     titleBox: {
         flex: 56,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 45,
         fontWeight: 600,
-        color: '#FFFFFF'
+        color: 'white',
     },
     yourName: {
         width: '88%',
