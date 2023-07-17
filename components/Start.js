@@ -1,22 +1,24 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity } from 'react-native';
 
 const Start = ({ navigation }) => {
   const [name, setName] = useState('');
 
   return (
     <View style={styles.container}>
-      <Text>Hello you!</Text>
+      <Text style={styles.title}>HUHU</Text>
       <TextInput
         style={styles.textInput}
         value={name}
         onChangeText={setName}
-        placeholder='pls type your username here'
+        placeholder='Your name'
       />
-      <Button
-        title="Go to Chat"
+      <TouchableOpacity 
+        style={styles.chatButton} 
         onPress={() => navigation.navigate('Chat', {name: name})}
-      />
+        >
+        <Text style={styles.btnText}>Start Chatting</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -27,12 +29,29 @@ const styles = StyleSheet.create({
      justifyContent: 'center',
     alignItems: 'center'
   },
+  title: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: '#FFFFFF'
+  },
   textInput: {
-    width: "88%",
+    width: '88%',
     padding: 15,
     borderWidth: 1,
     marginTop: 15,
     marginBottom: 15
+  },
+  chatButton: {
+    width: '88%',
+    backgroundColor: '#757083',
+    alignItems: 'center',
+    padding: 10,
+    
+  },
+  btnText: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: '#FFFFFF'
   }
 });
 
