@@ -9,7 +9,7 @@ const Chat = ({ route, navigation }) => {
   }, []);
 
  return (
-   <View style={styles.container, {backgroundColor}}>
+   <View style={[styles.container, { backgroundColor }]}>
      <Text>Welcome to the Chat</Text>
    </View>
  );
