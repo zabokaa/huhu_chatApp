@@ -13,6 +13,9 @@ const Start = ({ navigation }) => {
         onChangeText={setName}
         placeholder='&#128100; Your Name'
       />
+      <Text style={styles.chooseCol}>
+        Choose Background Color:
+      </Text>
       <TouchableOpacity 
         style={styles.chatButton} 
         onPress={() => navigation.navigate('Chat', {name: name})}
@@ -41,14 +44,24 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     fontSize: 16,
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    // opacity: '50%'
+  },
+  chooseCol:{
+    width: '88%',
+    fontSize: 16,
+    fontWeight: 300,
+    color: '#757083',
+    marginTop: 15,
+    marginBottom: 15,
   },
   chatButton: {
     width: '88%',
     backgroundColor: '#757083',
     alignItems: 'center',
     padding: 15,
-    
+    marginTop: 15,
+    marginBottom: 15,
   },
   btnText: {
     fontSize: 16,
