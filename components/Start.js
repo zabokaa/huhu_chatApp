@@ -8,10 +8,10 @@ const Start = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>HUHU</Text>
       <TextInput
-        style={styles.textInput}
+        style={styles.yourName}
         value={name}
         onChangeText={setName}
-        placeholder='Your name'
+        placeholder='&#128100; Your Name'
       />
       <TouchableOpacity 
         style={styles.chatButton} 
@@ -30,22 +30,24 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    fontSize: 16,
+    fontSize: 45,
     fontWeight: 600,
     color: '#FFFFFF'
   },
-  textInput: {
+  yourName: {
     width: '88%',
     padding: 15,
     borderWidth: 1,
     marginTop: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    fontSize: 16,
+    color: '#FFFFFF'
   },
   chatButton: {
     width: '88%',
     backgroundColor: '#757083',
     alignItems: 'center',
-    padding: 10,
+    padding: 15,
     
   },
   btnText: {
