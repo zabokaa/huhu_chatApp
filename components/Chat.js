@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { GiftedChat, Date } from 'react-native-gifted-chat';
 
 
 const Chat = ({ route, navigation }) => {
@@ -40,6 +40,10 @@ const Chat = ({ route, navigation }) => {
   useEffect(() => {
     navigation.setOptions({ title: name });
   }, []);
+  // change color of date
+  // const renderDay = (props) => {
+  //   return <Day {...props} textStyle={{color: 'black'}}/>;
+  // };
 
  return (
    <View style={[styles.container, { backgroundColor }]}>
@@ -49,6 +53,7 @@ const Chat = ({ route, navigation }) => {
           user={{
             _id: 1
           }}
+          // renderDay={renderDay}
         />
         {/* Keyboard avoiding for older iOS or android */}
         { Platform.OS==='ios'?<KeyboardAvoidingView behaviour='padding' />: null}
@@ -56,12 +61,12 @@ const Chat = ({ route, navigation }) => {
    </View>
  );
 
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
 });
 
 export default Chat;
