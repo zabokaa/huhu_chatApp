@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 
 
@@ -44,6 +44,9 @@ const Chat = ({ route, navigation }) => {
             _id: 1
           }}
         />
+        {/* Keyboard avoiding for older iOS or android */}
+        { Platform.OS==='ios'?<KeyboardAvoidingView behaviour='padding' />: null}
+        { Platform.OS==='android'?<KeyboardAvoidingView behaviour='height' />: null}
    </View>
  );
 
