@@ -41,9 +41,9 @@ const Chat = ({ route, navigation }) => {
     navigation.setOptions({ title: name });
   }, []);
   // change color of date
-  // const renderDay = (props) => {
-  //   return <Day {...props} textStyle={{color: 'black'}}/>;
-  // };
+  // renderDay(props) {
+  //   return <Day {...props} textStyle={{color: 'red'}}/>
+  // }
 
  return (
    <View style={[styles.container, { backgroundColor }]}>
@@ -53,7 +53,7 @@ const Chat = ({ route, navigation }) => {
           user={{
             _id: 1
           }}
-          // renderDay={renderDay}
+          // renderDay={this.renderDay}
         />
         {/* Keyboard avoiding for older iOS or android */}
         { Platform.OS==='ios'?<KeyboardAvoidingView behaviour='padding' />: null}
