@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
-import { GiftedChat, Day, Bubble, SystemMessage } from 'react-native-gifted-chat';
+import { GiftedChat, Day, Bubble, SystemMessage, Send } from 'react-native-gifted-chat';
 
 
 const Chat = ({ route, navigation }) => {
@@ -70,6 +70,15 @@ const Chat = ({ route, navigation }) => {
     );
   };
 
+  const renderSend = (props) => {
+    return (
+      <Send
+        {...props}
+        textStyle={{ color: 'pink' }}
+      />
+    );
+  };
+
  return (
    <View style={[styles.container, { backgroundColor }]}>
        <GiftedChat
@@ -77,6 +86,7 @@ const Chat = ({ route, navigation }) => {
           renderBubble={renderBubble}
           renderDay={renderDay}
           renderSystemMessage={renderSystemMessage}
+          renderSend={renderSend}
           onSend={messages => onSend(messages)}    //onSend when user sends msg
           user={{
             _id: 1
