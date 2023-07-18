@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { GiftedChat, Date } from 'react-native-gifted-chat';
+import { GiftedChat, Day, Bubble } from 'react-native-gifted-chat';
 
 
 const Chat = ({ route, navigation }) => {
@@ -41,19 +41,36 @@ const Chat = ({ route, navigation }) => {
     navigation.setOptions({ title: name });
   }, []);
   // change color of date
-  // renderDay(props) {
-  //   return <Day {...props} textStyle={{color: 'red'}}/>
-  // }
+  const renderDay = (props) => {
+    return <Day {...props} textStyle={{color: 'white'}}/>
+  }
 
+
+  //change color of bubbles:
+  const renderBubble = (props) => {
+    return <Bubble
+      {...props}
+      wrapperStyle={{
+        right: {
+          backgroundColor: '#000080'
+        },
+        left: {
+          backgroundColor: 'pink'
+        }
+      }}
+    />
+  }
  return (
    <View style={[styles.container, { backgroundColor }]}>
        <GiftedChat
           messages={messages}
+          renderBubble={renderBubble}
+          renderDay={renderDay}
           onSend={messages => onSend(messages)}    //onSend when user sends msg
           user={{
             _id: 1
           }}
-          // renderDay={this.renderDay}
+
         />
         {/* Keyboard avoiding for older iOS or android */}
         { Platform.OS==='ios'?<KeyboardAvoidingView behaviour='padding' />: null}
