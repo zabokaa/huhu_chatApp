@@ -74,7 +74,7 @@ const Chat = ({ route, navigation }) => {
     return (
       <Send
         {...props}
-        textStyle={{ color: 'pink' }}
+        textStyle={{ color: '#000080' }}
       />
     );
   };
