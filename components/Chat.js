@@ -27,6 +27,12 @@ const Chat = ({ route, navigation }) => {
           avatar: "https://placeimg.com/140/140/any",
         },
       },
+      {
+        _id: 2,
+        text: 'Huhu, you have entered the chat!',
+        createdAt: new Date(),
+        system: true,
+      },
     ]);
   }, []);
 
