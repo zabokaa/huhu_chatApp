@@ -2,6 +2,8 @@ import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableOpacity, Scr
 import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 import Start from './components/Start';
 import Chat from './components/Chat';
