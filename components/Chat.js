@@ -1,40 +1,38 @@
+import { addDoc, collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Day, Bubble, SystemMessage, Send } from 'react-native-gifted-chat';
 
-
-const Chat = ({ route, navigation }) => {
+const Chat = ({ route, navigation, db }) => {
   //getting parameters from start.js
-  const { name, backgroundColor } = route.params;
+  const { name, backgroundColor, user_id} = route.params;  //include user_id
   //state initialization
   const [messages, setMessages] = useState([]);
-  //settter func
-  const onSend = (newMessages) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
-  }
- 
-  // testing w static message
+  
+  // messge from DB
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,        // MUST HAVE: _id, text, createdAt, user object
-        text: "Hello developer",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-      {
-        _id: 2,
-        text: 'Huhu, you have entered the chat!',
-        createdAt: new Date(),
-        system: true,
-      },
-    ]);
-  }, []);
+      const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
+      const unsubMessages = onSnapshot(que, (docs) => {
+        let newMessages = [];
+        docs.forEach(doc => {
+          newMessages.push({
+            id: doc.id,
+            ...doc.data(),
+            createdAt: new Date(doc.data().createdAt.toMillis())
+          })
+        })
+        setMessages(newMessages);
+      })
+      return () => {
+        if (unsubMessages) unsubMessages();
+      }
+      }, []);
+
+      //setter func
+      const onSend = (newMessages) => {
+        addDoc(collection(db, 'messages'), newMessages[0])
+      };
 
   // setting name of user
   useEffect(() => {
@@ -88,8 +86,8 @@ const Chat = ({ route, navigation }) => {
           renderSystemMessage={renderSystemMessage}
           renderSend={renderSend}
           onSend={messages => onSend(messages)}    //onSend when user sends msg
-          user={{
-            _id: 1
+          user={{                                  // added name property
+             _id: user_id, title: name
           }}
 
         />
