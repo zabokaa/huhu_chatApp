@@ -30,7 +30,7 @@ const app = initializeApp(firebaseConfig);
   return (
     <NavigationContainer style={styles.container}> 
       <Stack.Navigator
-        initialRouteName='Chat'
+        initialRouteName='Start'      // is it start or chat ? 
       >
         <Stack.Screen            //access to DB
           name='Chat'>

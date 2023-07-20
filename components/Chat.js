@@ -1,22 +1,21 @@
+import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Day, Bubble, SystemMessage, Send } from 'react-native-gifted-chat';
 
-
 const Chat = ({ route, navigation, db }) => {
   //getting parameters from start.js
-  const { name, backgroundColor, _id } = route.params;  //include _id
+  const { name, backgroundColor, user_id} = route.params;  //include user_id
   //state initialization
   const [messages, setMessages] = useState([]);
-  //settter func
-  const onSend = (newMessages) => {
-    addDoc(collection(db, "messages"), newMessages[0])
-  }
+  
+
+  //testing:
+  console.log(route.params);
  
   // messge from DB
   useEffect(() => {
-    navigation.setOptions({ title: name });
       const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
       const unsubMessages = onSnapshot(que, (docs) => {
         let newMessages = [];
@@ -34,10 +33,15 @@ const Chat = ({ route, navigation, db }) => {
       }
       }, []);
 
+      //setter func
+      const onSend = (newMessages) => {
+        addDoc(collection(db, 'messages'), newMessages[0])
+      };
+
   // setting name of user
-  // useEffect(() => {
-  //   navigation.setOptions({ title: name });
-  // }, []);
+  useEffect(() => {
+    navigation.setOptions({ title: name });
+  }, []);
 
   // change color of date (called day !! )
   const renderDay = (props) => {
@@ -87,7 +91,7 @@ const Chat = ({ route, navigation, db }) => {
           renderSend={renderSend}
           onSend={messages => onSend(messages)}    //onSend when user sends msg
           user={{                                  // added name property
-            _id, name
+             _id: user_id, title: name
           }}
 
         />
