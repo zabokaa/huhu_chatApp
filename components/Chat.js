@@ -9,21 +9,27 @@ const Chat = ({ route, navigation, db }) => {
   const { name, backgroundColor, user_id} = route.params;  //include user_id
   //state initialization
   const [messages, setMessages] = useState([]);
-  
+  const loadCachedMsg = async () => {
+    const cachedMsg = await AsyncStorage.getItem('messages') || '[]';
+    setMessages(JSON.parse(cachedMsg));
+  };
   // messge from DB
   useEffect(() => {
       const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
-      const unsubMessages = onSnapshot(que, (docs) => {
+      const unsubMessages = onSnapshot(que, async(documentsSnapshot) => {
         let newMessages = [];
-        docs.forEach(doc => {
+        documentsSnapshot.forEach((doc) => {
           newMessages.push({
             id: doc.id,
             ...doc.data(),
             createdAt: new Date(doc.data().createdAt.toMillis())
           })
         })
+        cachedMsg(newMessages);
         setMessages(newMessages);
       })
+    } else loadCachedMsg();
+
       return () => {
         if (unsubMessages) unsubMessages();
       }

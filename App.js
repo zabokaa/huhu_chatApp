@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 import Start from './components/Start';
 import Chat from './components/Chat';
@@ -29,7 +31,7 @@ const app = initializeApp(firebaseConfig);
   return (
     <NavigationContainer style={styles.container}> 
       <Stack.Navigator
-        initialRouteName='Start'      // is it start or chat ? 
+        initialRouteName='Start'      
       >
         {/* I need both components */}
        {/* name is the title */}
