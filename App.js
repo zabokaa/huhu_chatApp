@@ -11,7 +11,22 @@ import Chat from './components/Chat';
 // Creating navigator before App func
 const Stack = createNativeStackNavigator();
 
-const App = () => {
+const App = () => {             
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBZaM3PO9IhA1CqTcvAiecSYV-mf0ziV1s",
+    authDomain: "huhu-d0ca8.firebaseapp.com",
+    projectId: "huhu-d0ca8",
+    storageBucket: "huhu-d0ca8.appspot.com",
+    messagingSenderId: "781975769704",
+    appId: "1:781975769704:web:3a34e6d0598fc0963ee1dd"
+  };
+
+// Initialize firebase
+const app = initializeApp(firebaseConfig);
+ // Initialize Cloud Firestore and get a reference to DB service
+ const db = getFirestore(app);
+ 
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -19,7 +34,6 @@ const App = () => {
       >
         <Stack.Screen
           name="Start"
-          component={Start}
         />
         <Stack.Screen
           name="Chat"
@@ -28,6 +42,6 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default App;
