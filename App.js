@@ -28,20 +28,24 @@ const app = initializeApp(firebaseConfig);
  const db = getFirestore(app);
  
   return (
-    <NavigationContainer>
+    <NavigationContainer style={styles.container}> 
       <Stack.Navigator
-        initialRouteName="Start"
+        initialRouteName='Chat'
       >
-        <Stack.Screen
-          name="Start"
-        />
-        <Stack.Screen
-          name="Chat"
-          component={Chat}
-        />
+        <Stack.Screen            //access to DB
+          name='Chat'>
+            {props => <Chat db={db} {...props} />}
+          </Stack.Screen>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create ({
+  container: {
+    flex: 1,
+  }
+})
 
 export default App;
