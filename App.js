@@ -32,10 +32,14 @@ const app = initializeApp(firebaseConfig);
       <Stack.Navigator
         initialRouteName='Start'      // is it start or chat ? 
       >
+        {/* I need both components */}
+       {/* name is the title */}
+        <Stack.Screen name='Home' component={Start} />     
         <Stack.Screen            //access to DB
           name='Chat'>
             {props => <Chat db={db} {...props} />}
-          </Stack.Screen>
+            </Stack.Screen>
+        
         
       </Stack.Navigator>
     </NavigationContainer>

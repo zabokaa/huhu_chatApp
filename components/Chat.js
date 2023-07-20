@@ -10,10 +10,6 @@ const Chat = ({ route, navigation, db }) => {
   //state initialization
   const [messages, setMessages] = useState([]);
   
-
-  //testing:
-  console.log(route.params);
- 
   // messge from DB
   useEffect(() => {
       const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
