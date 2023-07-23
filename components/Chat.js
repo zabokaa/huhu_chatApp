@@ -27,8 +27,8 @@ const Chat = ({ route, navigation, db }) => {
         })
         cachedMsg(newMessages);
         setMessages(newMessages);
-      })
-    } else loadCachedMsg();
+      });
+     loadCachedMsg();
 
       return () => {
         if (unsubMessages) unsubMessages();
@@ -102,9 +102,7 @@ const Chat = ({ route, navigation, db }) => {
         { Platform.OS==='android'?<KeyboardAvoidingView behaviour='height' />: null}
    </View>
  );
-
-};
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
