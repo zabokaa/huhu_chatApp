@@ -17,7 +17,7 @@ const Start = ({ navigation }) => {
             Alert.alert('you are signed in !');
           })
           .catch((error) => {
-            Alert.alert('unable to sign in. Please try again later.');
+            Alert.alert('unable to sign in');
           });
       };
     const [name, setName] = useState('');

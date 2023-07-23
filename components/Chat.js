@@ -2,32 +2,58 @@ import { addDoc, collection, query, onSnapshot, orderBy } from 'firebase/firesto
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
-import { GiftedChat, Day, Bubble, SystemMessage, Send } from 'react-native-gifted-chat';
+import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar } from 'react-native-gifted-chat';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Chat = ({ route, navigation, db }) => {
+const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
   //getting parameters from start.js
   const { name, backgroundColor, user_id} = route.params;  //include user_id
   //state initialization
   const [messages, setMessages] = useState([]);
-  
-  // messge from DB
+  const loadCachedMsg = async () => {
+    const cachedMsg = await AsyncStorage.getItem('messages') || '[]';
+    setMessages(JSON.parse(cachedMsg));
+  };
+  // mesg from DB or load cahed msg
   useEffect(() => {
-      const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
-      const unsubMessages = onSnapshot(que, (docs) => {
+    const loadMsg = async () => {
+ 
+      const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));  // added asynch
+      const unsubMessages = onSnapshot(que, async(documentsSnapshot) => {
         let newMessages = [];
-        docs.forEach(doc => {
+        documentsSnapshot.forEach((doc) => {
           newMessages.push({
             id: doc.id,
             ...doc.data(),
             createdAt: new Date(doc.data().createdAt.toMillis())
           })
-        })
+        });
+        // try-catch-func --> error handling mechanism
+        try {
+          await AsyncStorage.setItem('messages', JSON.stringify(newMessages));
+        } catch (error) {
+          console.log('Error caching messages:', error.message);
+        }
+
         setMessages(newMessages);
-      })
+      });
+
+      if (isConnected) {  
+      // then: enable Firestore network
+      enableNetwork(db);
+
       return () => {
         if (unsubMessages) unsubMessages();
-      }
-      }, []);
+      };
+    } else {
+      // Load cached messages from local storage
+      loadCachedMsg();
+      // Disable Firestore network when offline
+      disableNetwork(db);
+    }
+   };
+    loadMsg();
+      }, [isConnected]);
 
       //setter func
       const onSend = (newMessages) => {
@@ -77,6 +103,15 @@ const Chat = ({ route, navigation, db }) => {
     );
   };
 
+  // unable to add msg while offline:
+  const renderInputToolbar = (props) => {
+    if (isConnected) {
+      return <InputToolbar {...props} />;
+    } else {
+      return null; // Hide the InputToolbar when offline
+    }
+  };
+
  return (
    <View style={[styles.container, { backgroundColor }]}>
        <GiftedChat
@@ -85,6 +120,7 @@ const Chat = ({ route, navigation, db }) => {
           renderDay={renderDay}
           renderSystemMessage={renderSystemMessage}
           renderSend={renderSend}
+          renderInputToolbar={renderInputToolbar}
           onSend={messages => onSend(messages)}    //onSend when user sends msg
           user={{                                  // added name property
              _id: user_id, title: name
@@ -96,9 +132,7 @@ const Chat = ({ route, navigation, db }) => {
         { Platform.OS==='android'?<KeyboardAvoidingView behaviour='height' />: null}
    </View>
  );
-
-};
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

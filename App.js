@@ -1,17 +1,29 @@
-import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableOpacity, ScrollView} from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableOpacity, ScrollView, LogBox} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-
+import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
+import { useEffect } from "react";
+import { useNetInfo } from "@react-native-community/netinfo";
 import Start from './components/Start';
 import Chat from './components/Chat';
 
 // Creating navigator before App func
 const Stack = createNativeStackNavigator();
 
-const App = () => {             
+LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
+
+const App = () => {         
+  // network connectivity status:
+  const connectionStatus = useNetInfo();
+  useEffect(() => {
+    if (connectionStatus.isConnected === false) {
+      Alert.alert("connection lost!");
+      disableNetwork(db);
+    } else if (connectionStatus.isConnected === true) {
+      enableNetwork(db);
+    }
+  }, [connectionStatus.isConnected]);
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyBZaM3PO9IhA1CqTcvAiecSYV-mf0ziV1s",
@@ -30,14 +42,14 @@ const app = initializeApp(firebaseConfig);
   return (
     <NavigationContainer style={styles.container}> 
       <Stack.Navigator
-        initialRouteName='Start'      // is it start or chat ? 
+        initialRouteName='Start'      
       >
         {/* I need both components */}
        {/* name is the title */}
         <Stack.Screen name='Home' component={Start} />     
         <Stack.Screen            //access to DB
           name='Chat'>
-            {props => <Chat db={db} {...props} />}
+            {props => <Chat isConnected={connectionStatus.isConnected} db={db} {...props} />}
             </Stack.Screen>
         
         
