@@ -2,7 +2,7 @@ import { addDoc, collection, query, onSnapshot, orderBy } from 'firebase/firesto
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
-import { GiftedChat, Day, Bubble, SystemMessage, Send } from 'react-native-gifted-chat';
+import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
@@ -102,6 +102,15 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
     );
   };
 
+  // unable to add msg while offline:
+  const renderInputToolbar = (props) => {
+    if (isConnected) {
+      return <InputToolbar {...props} />;
+    } else {
+      return null; // Hide the InputToolbar when offline
+    }
+  };
+
  return (
    <View style={[styles.container, { backgroundColor }]}>
        <GiftedChat
@@ -110,6 +119,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
           renderDay={renderDay}
           renderSystemMessage={renderSystemMessage}
           renderSend={renderSend}
+          renderInputToolbar={renderInputToolbar}
           onSend={messages => onSend(messages)}    //onSend when user sends msg
           user={{                                  // added name property
              _id: user_id, title: name
