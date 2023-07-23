@@ -17,8 +17,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
   // mesg from DB or load cahed msg
   useEffect(() => {
     const loadMsg = async () => {
-      if (connectionStatus.isConnected) {
-    
+ 
       const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));  // added asynch
       const unsubMessages = onSnapshot(que, async(documentsSnapshot) => {
         let newMessages = [];
@@ -38,6 +37,8 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
 
         setMessages(newMessages);
       });
+
+      if (isConnected) {  
       // then: enable Firestore network
       enableNetwork(db);
 
