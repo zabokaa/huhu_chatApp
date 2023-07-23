@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Day, Bubble, SystemMessage, Send } from 'react-native-gifted-chat';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Chat = ({ route, navigation, db }) => {
   //getting parameters from start.js
@@ -15,7 +16,7 @@ const Chat = ({ route, navigation, db }) => {
   };
   // messge from DB
   useEffect(() => {
-      const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
+      const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));  // added asynch
       const unsubMessages = onSnapshot(que, async(documentsSnapshot) => {
         let newMessages = [];
         documentsSnapshot.forEach((doc) => {
@@ -24,6 +25,8 @@ const Chat = ({ route, navigation, db }) => {
             ...doc.data(),
             createdAt: new Date(doc.data().createdAt.toMillis())
           })
+        // try-catch-func --> error handling mechanism
+        
         })
         cachedMsg(newMessages);
         setMessages(newMessages);
@@ -34,6 +37,9 @@ const Chat = ({ route, navigation, db }) => {
         if (unsubMessages) unsubMessages();
       }
       }, []);
+
+      // asynch func
+
 
       //setter func
       const onSend = (newMessages) => {
