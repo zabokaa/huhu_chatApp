@@ -5,7 +5,7 @@ import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Day, Bubble, SystemMessage, Send } from 'react-native-gifted-chat';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Chat = ({ route, navigation, db }) => {
+const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
   //getting parameters from start.js
   const { name, backgroundColor, user_id} = route.params;  //include user_id
   //state initialization
@@ -14,8 +14,11 @@ const Chat = ({ route, navigation, db }) => {
     const cachedMsg = await AsyncStorage.getItem('messages') || '[]';
     setMessages(JSON.parse(cachedMsg));
   };
-  // messge from DB
+  // mesg from DB or load cahed msg
   useEffect(() => {
+    const loadMsg = async () => {
+      if (connectionStatus.isConnected) {
+    
       const que = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));  // added asynch
       const unsubMessages = onSnapshot(que, async(documentsSnapshot) => {
         let newMessages = [];
@@ -25,21 +28,31 @@ const Chat = ({ route, navigation, db }) => {
             ...doc.data(),
             createdAt: new Date(doc.data().createdAt.toMillis())
           })
+        });
         // try-catch-func --> error handling mechanism
-        
-        })
-        cachedMsg(newMessages);
+        try {
+          await AsyncStorage.setItem('messages', JSON.stringify(newMessages));
+        } catch (error) {
+          console.log('Error caching messages:', error.message);
+        }
+
         setMessages(newMessages);
       });
-     loadCachedMsg();
+      // then: enable Firestore network
+      enableNetwork(db);
 
       return () => {
         if (unsubMessages) unsubMessages();
-      }
-      }, []);
-
-      // asynch func
-
+      };
+    } else {
+      // Load cached messages from local storage
+      loadCachedMsg();
+      // Disable Firestore network when offline
+      disableNetwork(db);
+    }
+   };
+    loadMsg();
+      }, [isConnected]);
 
       //setter func
       const onSend = (newMessages) => {
