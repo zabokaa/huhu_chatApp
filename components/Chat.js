@@ -5,6 +5,7 @@ import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar, renderActions } from 'react-native-gifted-chat';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
 const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
   //getting parameters from start.js
@@ -118,6 +119,28 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
     return <CustomActions {...props} />;
   };
 
+  // view Location
+  const renderCustomView = (props) => {
+    const { currentMessage} = props;
+    if (currentMessage.location) {
+      return (
+          <MapView
+            style={{width: 150,
+              height: 100,
+              borderRadius: 13,
+              margin: 3}}
+            region={{
+              latitude: currentMessage.location.latitude,
+              longitude: currentMessage.location.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+      );
+    }
+    return null;
+  }
+
  return (
    <View style={[styles.container, { backgroundColor }]}>
        <GiftedChat
@@ -128,6 +151,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
           renderSend={renderSend}
           renderInputToolbar={renderInputToolbar}
           renderActions={renderCustomActions}
+          renderCustomView={renderCustomView}
           onSend={messages => onSend(messages)}    //onSend when user sends msg
           user={{                                  // added name property
              _id: user_id, title: name
