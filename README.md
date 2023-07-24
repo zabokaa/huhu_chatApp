@@ -6,7 +6,7 @@
 * [key features](#key-features)
 * [user stories](#user-stories)
 * [project status](#project-status)
-* [link to app](#link-to-app)
+* [chat app setup guide](#chat-app-setup-guide)
 * [acknowledgements](#acknowledgements)
 
 ## objective
@@ -33,10 +33,20 @@ the latest news.
 reader so that I can engage with a chat interface.
 
 ## project status
-project is: _in progress
+project is: finished
 
-## link to app
-tba
+## chat app setup guide
+HUHU 🙃 this guide will walk you through the steps required to set up the development environment, configure the database, and install the necessary libraries to run the app.
+- clone the repository
+- install dependencies
+- run the app `npx expo start`
+- all used libraries for that chat app (e.g. react-native-gifted-chat, expo-image-picker, .. ) are already included in the package.json file and will be installed automatically when you run npm install
+- that's it!
+- you should now have the Chat App up and running on your development machine. if you encounter any issues or have questions, please feel free to reach out for support
+- Happy chatting ! 🚀
+
+
+
 
 ## acknowledgements
 this project was based on full-stack immersion course @ CareerFoundry
