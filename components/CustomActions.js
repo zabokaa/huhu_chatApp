@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import { uploadBytes, ref } from 'firebase/storage';
 
 
-const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage }) => {
+const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }) => {
     // fetching actionSheet
     const actionSheet = useActionSheet();
     const inActionPress = () => {
@@ -35,6 +35,13 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage }) => {
             },
           );
         };
+
+    // prep for uploading multiple pics, storing with individual naming
+    const generateReference = (uri) => {
+        const timeStamp = (new Date()).getTime();
+        const imageName = uri.split("/")[uri.split("/").length - 1];
+        return `${user_id}-${timeStamp}-${imageName}`;
+      }
     
     // Pick an image from the library
     const pickImage = async (storage) => {
@@ -43,15 +50,16 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage }) => {
               let result = await ImagePicker.launchImageLibraryAsync();
               if (!result.canceled) {
                 const imageURI = result.assets[0].uri;
+                const uniqueRefString = generateReference(imageURI);
                 const response = await fetch(imageURI);
                 const blob = await response.blob();         // convert for fireBase
-                const newUploadRef = ref(storage, 'img123'); //reference for storage Cloud
+                const newUploadRef = ref(storage, uniqueRefString); //reference for storage Cloud
                 // using fireBase upload method:
                 uploadBytes(newUploadRef, blob).then(async (snapshot) => {   // snapshot contains meta data
                     console.log('Snapshot:', snapshot);
                     console.log('upload is working !!');
                 })
-              } else Alert.alert("Permissions haven't been granted.");
+              } else Alert.alert('Permission not granted');
             }
           }
      
@@ -62,7 +70,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage }) => {
               let result = await ImagePicker.launchCameraAsync();
               if (!result.canceled) {
                 console.log('uploading and uploading the image occurs here');
-              } else Alert.alert("Permissions haven't been granted.");
+              } else Alert.alert('Permission not granted');
             }
           }
 
@@ -79,7 +87,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage }) => {
               },
             });
           } else Alert.alert('Error occurred while fetching your location');
-        } else Alert.alert('Permissions not granted');
+        } else Alert.alert('Permission not granted');
       }
 
     
