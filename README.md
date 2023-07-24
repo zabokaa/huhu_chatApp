@@ -1,5 +1,6 @@
 # :purple_circle: *HUHU _chatApp* :purple_circle:
 
+![app](./assets/IMG_app_merged.png?raw=true "pics of start and chat screens")
 
 ## table of contents
 * [objective](#objective)
