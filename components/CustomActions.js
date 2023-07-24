@@ -2,7 +2,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as Location from 'expo-location';
-import { onSend } from 'react-native-gifted-chat';  // why not .. ah already included iin expo-location ?Sen
+
 
 const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
     // fetching actionSheet
@@ -34,6 +34,28 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
             },
           );
         };
+    
+    // Pick an image from the library
+    const pickImage = async () => {
+        let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (permissions?.granted) {
+              let result = await ImagePicker.launchImageLibraryAsync();
+              if (!result.canceled) {
+                console.log('uploading and uploading the image occurs here');
+              } else Alert.alert("Permissions haven't been granted.");
+            }
+          }
+     
+    // Take a picture
+    const takePic = async () => {
+        let permissions = await ImagePicker.requestCameraPermissionsAsync();
+            if (permissions?.granted) {
+              let result = await ImagePicker.launchCameraAsync();
+              if (!result.canceled) {
+                console.log('uploading and uploading the image occurs here');
+              } else Alert.alert("Permissions haven't been granted.");
+            }
+          }
 
     // get my location:
     const getLocation = async () => {
@@ -59,7 +81,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
                 onPress={inActionPress}
             >
                 <View style={[styles.wrapper, wrapperStyle]}>
-                    <Text style={[styles.iconText, iconTextStyle]}>+</Text>
+                    <Text style={[styles.iconText, iconTextStyle]}>++</Text>
                 </View>
             </TouchableOpacity>
           );
