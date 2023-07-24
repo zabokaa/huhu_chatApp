@@ -23,7 +23,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }
             async (buttonIndex) => {
               switch (buttonIndex) {
                 case 0:
-                  pickImage(storage);
+                  pickImage();
                   return;
                 case 1:
                   takePic();
@@ -43,8 +43,8 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }
         return `${user_id}-${timeStamp}-${imageName}`;
       }
     
-    // Pick an image from the library, store it and send it 
-    const pickImage = async (storage) => {
+    // Pick an image from the library, store it and send it via chat bubble
+    const pickImage = async () => {
         let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
             if (permissions?.granted) {
               let result = await ImagePicker.launchImageLibraryAsync();
@@ -56,9 +56,8 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }
                 const newUploadRef = ref(storage, uniqueRefString); //reference for storage Cloud
                 // using fireBase upload method:
                 uploadBytes(newUploadRef, blob).then(async (snapshot) => {   // snapshot contains meta data
-                    // // for testing upload + showing metadata
+                    // // showing metadata
                     // console.log('Snapshot:', snapshot);
-                    // console.log('upload is working !!');
                     const imageURL = await getDownloadURL(snapshot.ref)
                     onSend({ image: imageURL})
                 })
@@ -66,7 +65,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }
             }
           }
      
-    // Take a picture + storage + send in bubble
+    // Take a picture + store + send in bubble
     const takePic = async () => {
         let permissions = await ImagePicker.requestCameraPermissionsAsync();
             if (permissions?.granted) {
@@ -78,7 +77,6 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }
                 const blob = await response.blob();      
                 const newUploadRef = ref(storage, uniqueRefString); 
                 uploadBytes(newUploadRef, blob).then(async (snapshot) => {
-                console.log('uploading and uploading the image occurs here');
                 const imageURL = await getDownloadURL(snapshot.ref)
                     onSend({ image: imageURL})
               })
@@ -107,10 +105,14 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }
     return (
             <TouchableOpacity 
                 style={styles.container}
+                accessible={true}
+                accessibilityLabel="add more"
+                accessibilityHint="You can choose to send an image or your current location."
+                accessibilityRole="button"
                 onPress={inActionPress}
             >
                 <View style={[styles.wrapper, wrapperStyle]}>
-                    <Text style={[styles.iconText, iconTextStyle]}>++</Text>
+                    <Text style={[styles.iconText, iconTextStyle]}>+</Text>
                 </View>
             </TouchableOpacity>
           );
@@ -126,14 +128,14 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }
         },
         wrapper: {
           borderRadius: 13,
-          borderColor: '#b2b2b2',
+          borderColor: '#000080',
           borderWidth: 2,
           flex: 1,
         },
         iconText: {
-          color: '#b2b2b2',
+          color: '#000080',
           fontWeight: 'bold',
-          fontSize: 10,
+          fontSize: 15,
           backgroundColor: 'transparent',
           textAlign: 'center',
         },
