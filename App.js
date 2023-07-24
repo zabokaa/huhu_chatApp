@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useNetInfo } from "@react-native-community/netinfo";
 import Start from './components/Start';
 import Chat from './components/Chat';
+import { getStorage } from 'firebase/storage';
 
 // Creating navigator before App func
 const Stack = createNativeStackNavigator();
@@ -38,6 +39,8 @@ const App = () => {
 const app = initializeApp(firebaseConfig);
  // Initialize Cloud Firestore and get a reference to DB service
  const db = getFirestore(app);
+ // storage for pics
+ const storage = getStorage(app);
  
   return (
     <NavigationContainer style={styles.container}> 
@@ -49,7 +52,7 @@ const app = initializeApp(firebaseConfig);
         <Stack.Screen name='Home' component={Start} />     
         <Stack.Screen            //access to DB
           name='Chat'>
-            {props => <Chat isConnected={connectionStatus.isConnected} db={db} {...props} />}
+            {props => <Chat isConnected={connectionStatus.isConnected} storage={storage} db={db} {...props} />}
             </Stack.Screen>
         
         

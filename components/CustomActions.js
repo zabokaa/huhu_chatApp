@@ -2,9 +2,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as Location from 'expo-location';
+import { uploadBytes } from 'firebase/storage';
 
 
-const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
+const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage }) => {
     // fetching actionSheet
     const actionSheet = useActionSheet();
     const inActionPress = () => {
@@ -22,7 +23,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
             async (buttonIndex) => {
               switch (buttonIndex) {
                 case 0:
-                  pickImage();
+                  pickImage(storage);
                   return;
                 case 1:
                   takePic();
@@ -36,12 +37,19 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
         };
     
     // Pick an image from the library
-    const pickImage = async () => {
+    const pickImage = async (storage) => {
         let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
             if (permissions?.granted) {
               let result = await ImagePicker.launchImageLibraryAsync();
               if (!result.canceled) {
-                console.log('uploading and uploading the image occurs here');
+                const imageURI = result.assets[0].uri;
+                const response = await fetch(imageURI);
+                const blob = await response.blob();         // convert for fireBase
+                const newUploadRef = ref(storage, 'img123'); //reference for storage Cloud
+                // using fireBase upload method:
+                uploadBytes(newUploadRef, blob).then(async (snapshot) => {
+                    console.log('upload is working !!');
+                })
               } else Alert.alert("Permissions haven't been granted.");
             }
           }

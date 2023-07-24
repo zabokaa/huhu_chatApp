@@ -6,10 +6,12 @@ import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar } from 'reac
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from './CustomActions';
 import MapView from 'react-native-maps';
+import { uploadBytes } from 'firebase/storage';
 
-const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
+
+const Chat = ({ route, navigation, db, isConnected, storage }) => {   
   //getting parameters from start.js
-  const { name, backgroundColor, user_id} = route.params;  //include user_id
+  const { name, backgroundColor, user_id} = route.params;  
   //state initialization
   const [messages, setMessages] = useState([]);
   const loadCachedMsg = async () => {
@@ -41,7 +43,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
       });
 
       if (isConnected) {  
-      // // then: enable Firestore network
+      // // then: enable Firestore network -- Dopplung, schon in app.js
       // enableNetwork(db);
 
       return () => {
@@ -116,7 +118,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
 
   // adding actionSheet to input field
   const renderCustomActions = (props) => {
-    return <CustomActions onSend={onSend} {...props} />;         // adding onSend callback !!
+    return <CustomActions storage={storage} {...props} />;         // adding onSend callback !!
   };
 
   // view Location in bubble
@@ -140,6 +142,9 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
     }
     return null;
   }
+
+  // view pics in the bubble:
+
 
  return (
    <View style={[styles.container, { backgroundColor }]}>
