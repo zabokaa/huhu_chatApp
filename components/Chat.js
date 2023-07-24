@@ -1,10 +1,10 @@
 import { addDoc, collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
-import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar } from 'react-native-gifted-chat';
+import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar, renderActions } from 'react-native-gifted-chat';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CustomActions from './components/Chat';
+import CustomActions from './CustomActions';
 
 const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
   //getting parameters from start.js
@@ -40,8 +40,8 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
       });
 
       if (isConnected) {  
-      // then: enable Firestore network
-      enableNetwork(db);
+      // // then: enable Firestore network
+      // enableNetwork(db);
 
       return () => {
         if (unsubMessages) unsubMessages();
@@ -49,8 +49,8 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
     } else {
       // Load cached messages from local storage
       loadCachedMsg();
-      // Disable Firestore network when offline
-      disableNetwork(db);
+      // // Disable Firestore network when offline
+      // disableNetwork(db);
     }
    };
     loadMsg();
@@ -114,7 +114,9 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
   };
 
   // adding actionSheet to input field
-  
+  const renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
 
  return (
    <View style={[styles.container, { backgroundColor }]}>
@@ -125,6 +127,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
           renderSystemMessage={renderSystemMessage}
           renderSend={renderSend}
           renderInputToolbar={renderInputToolbar}
+          renderActions={renderCustomActions}
           onSend={messages => onSend(messages)}    //onSend when user sends msg
           user={{                                  // added name property
              _id: user_id, title: name
