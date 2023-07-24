@@ -1,7 +1,7 @@
 import { addDoc, collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from './components/Chat';
@@ -112,6 +112,9 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
       return null; // Hide the InputToolbar when offline
     }
   };
+
+  // adding actionSheet to input field
+  
 
  return (
    <View style={[styles.container, { backgroundColor }]}>
