@@ -116,7 +116,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
 
   // adding actionSheet to input field
   const renderCustomActions = (props) => {
-    return <CustomActions {...props} />;
+    return <CustomActions onSend={onSend} {...props} />;         // adding onSend callback !!
   };
 
   // view Location in bubble
@@ -125,10 +125,10 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
     if (currentMessage.location) {
       return (
           <MapView
-            style={{width: 150,
+            style={{width: 100,
               height: 100,
-              borderRadius: 13,
-              margin: 3}}
+              borderRadius: 50,
+              margin: 10}}
             region={{
               latitude: currentMessage.location.latitude,
               longitude: currentMessage.location.longitude,
