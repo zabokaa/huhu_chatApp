@@ -2,7 +2,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as Location from 'expo-location';
-import { uploadBytes, ref } from 'firebase/storage';
+import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 
 
 const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }) => {
@@ -56,8 +56,11 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, user_id }
                 const newUploadRef = ref(storage, uniqueRefString); //reference for storage Cloud
                 // using fireBase upload method:
                 uploadBytes(newUploadRef, blob).then(async (snapshot) => {   // snapshot contains meta data
-                    console.log('Snapshot:', snapshot);
-                    console.log('upload is working !!');
+                    // // for testing upload + showing metadata
+                    // console.log('Snapshot:', snapshot);
+                    // console.log('upload is working !!');
+                    const imageURL = await getDownloadURL(snapshot.ref)
+                    onSend({ image: imageURL})
                 })
               } else Alert.alert('Permission not granted');
             }
