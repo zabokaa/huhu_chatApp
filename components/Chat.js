@@ -6,12 +6,11 @@ import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar } from 'reac
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from './CustomActions';
 import MapView from 'react-native-maps';
-import { uploadBytes } from 'firebase/storage';
 
 
 const Chat = ({ route, navigation, db, isConnected, storage }) => {   
   //getting parameters from start.js
-  const { name, backgroundColor, user_id} = route.params;  
+  const { name, backgroundColor, user_id } = route.params;  
   //state initialization
   const [messages, setMessages] = useState([]);
   const loadCachedMsg = async () => {
@@ -43,17 +42,12 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
       });
 
       if (isConnected) {  
-      // // then: enable Firestore network -- Dopplung, schon in app.js
-      // enableNetwork(db);
-
       return () => {
         if (unsubMessages) unsubMessages();
       };
     } else {
       // Load cached messages from local storage
       loadCachedMsg();
-      // // Disable Firestore network when offline
-      // disableNetwork(db);
     }
    };
     loadMsg();

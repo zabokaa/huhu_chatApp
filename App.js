@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableOpacity, ScrollView, LogBox} from 'react-native';
+import { StyleSheet, Alert, LogBox} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { initializeApp } from "firebase/app";
