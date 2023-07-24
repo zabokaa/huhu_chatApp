@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomActions from './components/Chat';
 
 const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
   //getting parameters from start.js
