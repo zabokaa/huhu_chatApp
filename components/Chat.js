@@ -2,7 +2,7 @@ import { addDoc, collection, query, onSnapshot, orderBy } from 'firebase/firesto
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
-import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar, renderActions } from 'react-native-gifted-chat';
+import { GiftedChat, Day, Bubble, SystemMessage, Send, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from './CustomActions';
 import MapView from 'react-native-maps';
@@ -119,7 +119,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {   //incl isConnected!
     return <CustomActions {...props} />;
   };
 
-  // view Location
+  // view Location in bubble
   const renderCustomView = (props) => {
     const { currentMessage} = props;
     if (currentMessage.location) {

@@ -2,8 +2,9 @@ import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as Location from 'expo-location';
+import { onSend } from 'react-native-gifted-chat';  // why not .. ah already included iin expo-location ?Sen
 
-const CustomActions = ({ wrapperStyle, iconTextStyle }) => {
+const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
     // fetching actionSheet
     const actionSheet = useActionSheet();
     const inActionPress = () => {
@@ -33,6 +34,22 @@ const CustomActions = ({ wrapperStyle, iconTextStyle }) => {
             },
           );
         };
+
+    // get my location:
+    const getLocation = async () => {
+        let permissions = await Location.requestForegroundPermissionsAsync();
+        if (permissions?.granted) {
+          const location = await Location.getCurrentPositionAsync({});
+          if (location) {
+            onSend({
+              location: {
+                longitude: location.coords.longitude,
+                latitude: location.coords.latitude,
+              },
+            });
+          } else Alert.alert('Error occurred while fetching your location');
+        } else Alert.alert('Permissions not granted');
+      }
 
     
 
