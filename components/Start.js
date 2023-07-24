@@ -38,7 +38,7 @@ const Start = ({ navigation }) => {
   return (
     <View style={[styles.container, {backgroundColor}]}>
         <ImageBackground
-            source={require('../assets/BackgroundIMG.png')}
+            source={require('../assets/background_huhu.png')}
             resizeMode='cover'
             style={styles.backgroundImage}
         >
@@ -118,7 +118,8 @@ const styles = StyleSheet.create({   //OBJECT WITH PROPERTIES, THAT ARE OBJECTS 
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 15,          //added margins, so user can see the col change for chat view
-        marginRight: 15
+        marginRight: 15,
+    
     },
     titleBox: {
         flex: 56,
@@ -134,9 +135,9 @@ const styles = StyleSheet.create({   //OBJECT WITH PROPERTIES, THAT ARE OBJECTS 
         marginBottom: 20,
     },
     title: {
-        fontSize: 45,
+        fontSize: 65,
         fontWeight: 600,
-        color: 'white',
+        color: '#483D8B'
     },
     yourName: {
         width: '88%',
