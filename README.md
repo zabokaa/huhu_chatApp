@@ -40,6 +40,8 @@ project is: finished
 HUHU 🙃 this guide will walk you through the steps required to set up the development environment, configure the database, and install the necessary libraries to run the app.
 - clone the repository
 - install dependencies: all used libraries for that chat app (e.g. react-native-gifted-chat, expo-image-picker, .. ) are already included in the package.json file and will be installed automatically when you run `npm install`
+- create database https://firebase.google.com/ (ensure in the “Rules” tab the function is set to `allow read, write: if true;`).
+- don't forget to update App.js with your personal firebaseConfig !
 - run the app `npx expo start`
 - that's it !
 - you should now have the Chat App up and running on your development machine. if you encounter any issues or have questions, please feel free to reach out for support
