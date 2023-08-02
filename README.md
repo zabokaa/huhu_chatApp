@@ -6,6 +6,7 @@
 * [objective](#objective)
 * [key features](#key-features)
 * [user stories](#user-stories)
+* [technologies](#technologies)
 * [project status](#project-status)
 * [chat app setup guide](#chat-app-setup-guide)
 * [acknowledgements](#acknowledgements)
@@ -32,6 +33,9 @@ the latest news.
 - As a user, I want to be able to read my messages offline so I can reread conversations at any time.
 - As a user with a visual impairment, I want to use a chat app that is compatible with a screen
 reader so that I can engage with a chat interface.
+
+## technologies
+HTML | CSS | JavaScript | React Native | Expo | Google Firestore DB + Firebase Cloud
 
 ## project status
 project is: finished
